@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bedankt! — Simon Simpel</title>
+<meta name="description" content="Je bent ingeschreven. Vrijdag stuurt Simon je het eerste tegeltje.">
+<meta name="robots" content="noindex">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1c3a6e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream:        #f4ecd8;
+    --cream-deep:   #ebdfc3;
+    --paper:        #faf6ec;
+    --tile-blue:    #1c3a6e;
+    --tile-blue-dk: #14284e;
+    --tile-blue-lt: #3c64a8;
+    --terracotta:   #c8553d;
+    --gold:         #b8893a;
+    --ink:          #1a1a1a;
+    --muted:        #5a5a5a;
+    --line:         rgba(28, 58, 110, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav.site-nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(244, 236, 216, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1300px; margin: 0 auto;
+    padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 38px; height: 38px;
+    background: var(--tile-blue);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--cream);
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 22px;
+    box-shadow: 0 2px 0 var(--tile-blue-dk);
+  }
+  .brand-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .brand-name em { font-style: italic; color: var(--tile-blue); }
+  .nav-back {
+    text-decoration: none; color: var(--ink);
+    font-size: 14px; font-weight: 500;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--tile-blue); }
+
+  /* Main thank-you content */
+  main {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px 28px 80px;
+    position: relative; z-index: 2;
+  }
+  .thanks-shell {
+    max-width: 640px; width: 100%;
+    text-align: center;
+  }
+
+  .checkmark-tile {
+    width: 130px; height: 130px;
+    margin: 0 auto 32px;
+    position: relative;
+    background: linear-gradient(155deg, #fbfaf3 0%, #efe5c8 100%);
+    border-radius: 8px;
+    box-shadow:
+      0 1px 0 #fff inset,
+      0 18px 36px -16px rgba(28,58,110,0.35),
+      0 8px 16px -8px rgba(28,58,110,0.18);
+    transform: rotate(-3deg);
+    animation: tileIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  }
+  .checkmark-tile::before {
+    content: ''; position: absolute; inset: 10px;
+    border: 1.5px solid var(--tile-blue);
+    border-radius: 4px;
+  }
+  .checkmark-tile svg {
+    position: absolute; inset: 0; margin: auto;
+    width: 64px; height: 64px;
+    animation: checkIn 0.5s 0.3s ease-out backwards;
+  }
+
+  @keyframes tileIn {
+    from { transform: rotate(-3deg) translateY(20px); opacity: 0; }
+    to   { transform: rotate(-3deg) translateY(0); opacity: 1; }
+  }
+  @keyframes checkIn {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .thanks-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--tile-blue); margin-bottom: 18px;
+    animation: fadeUp 0.6s 0.4s backwards;
+  }
+  .thanks-eyebrow::before, .thanks-eyebrow::after {
+    content: ''; width: 24px; height: 1px; background: var(--tile-blue);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.5vw, 60px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 22px;
+    animation: fadeUp 0.6s 0.5s backwards;
+  }
+  h1 em { font-style: italic; color: var(--tile-blue); font-weight: 500; }
+
+  .lede {
+    font-size: 19px; color: var(--muted);
+    max-width: 480px; margin: 0 auto 40px;
+    animation: fadeUp 0.6s 0.6s backwards;
+  }
+
+  .what-next {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 28px 30px;
+    text-align: left;
+    margin-bottom: 40px;
+    animation: fadeUp 0.6s 0.7s backwards;
+  }
+  .what-next h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .what-next ul { list-style: none; }
+  .what-next li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .what-next li::before {
+    content: '✓';
+    position: absolute; left: 0; top: 0;
+    color: var(--tile-blue);
+    font-weight: 700;
+  }
+
+  .actions {
+    display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 0.6s 0.8s backwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 22px;
+    border-radius: 999px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary {
+    background: var(--tile-blue); color: var(--cream);
+    box-shadow: 0 4px 0 var(--tile-blue-dk);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--tile-blue-dk); }
+  .btn-ghost {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-ghost:hover { background: var(--ink); color: var(--cream); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Footer */
+  footer.site-footer {
+    background: var(--cream-deep);
+    border-top: 1px solid var(--line);
+    padding: 30px 28px;
+    position: relative; z-index: 2;
+    text-align: center;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer em { color: var(--tile-blue); font-style: italic; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-mark">S</div>
+      <div class="brand-name">Simon <em>Simpel</em></div>
+    </a>
+    <a href="index.html" class="nav-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Terug naar de site
+    </a>
+  </div>
+</nav>
+
+<main>
+  <div class="thanks-shell">
+
+    <div class="checkmark-tile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#1c3a6e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12.5l4.5 4.5L19 7.5"/>
+      </svg>
+    </div>
+
+    <div class="thanks-eyebrow" id="eyebrow">Inschrijving gelukt</div>
+    <h1 id="title">Welkom bij <em>de vrijdagmail</em>.</h1>
+    <p class="lede" id="lede">
+      Je bent ingeschreven. Vrijdagochtend stuurt Simon je het eerste tegeltje.
+      Korte mail. Eén of twee gedachten. Niets meer, niets minder.
+    </p>
+
+    <div class="what-next" id="whatnext">
+      <h2>Wat nu?</h2>
+      <ul>
+        <li>Houd je inbox in de gaten — vrijdag stuurt Simon het eerste tegeltje.</li>
+        <li>Soms belandt de mail in spam — check daar de eerste keer ook even.</li>
+        <li>Sluit deze pagina gewoon. Vrijdag spreken we elkaar weer.</li>
+      </ul>
+    </div>
+
+    <div class="actions">
+      <a href="index.html#tegeltjes" class="btn btn-primary" id="primary-btn">
+        Lees alvast wat tegeltjes
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="tegelmaker.html" class="btn btn-ghost">Maak je eigen tegeltje</a>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  © 2026 Simon Simpel. <em>Een goed idee past altijd op een tegeltje.</em>
+</footer>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('type') === 'contact') {
+    document.title = 'Bericht ontvangen — Simon Simpel';
+    document.getElementById('eyebrow').textContent = 'Bericht ontvangen';
+    document.getElementById('title').innerHTML = 'Dank voor je <em>bericht</em>.';
+    document.getElementById('lede').textContent = 'Simon heeft je vraag binnen en antwoordt meestal binnen een werkdag. Houd je inbox in de gaten — soms ook even spam checken.';
+    document.getElementById('whatnext').style.display = 'none';
+    const btn = document.getElementById('primary-btn');
+    btn.innerHTML = 'Terug naar de site <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+    btn.href = 'index.html';
+  }
+</script>
+
+</body>
+</html>

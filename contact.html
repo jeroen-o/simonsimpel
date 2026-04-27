@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Simon Simpel</title>
+<meta name="description" content="Vragen voor Simon? Stuur een bericht via het contactformulier. Geen ticketsysteem, geen formulier-ellende. Antwoord meestal binnen een werkdag.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://simonsimpel.nl/contact.html">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://simonsimpel.nl/contact.html">
+<meta property="og:title" content="Contact — Simon Simpel">
+<meta property="og:description" content="Stuur Simon een bericht. Geen ticketsysteem, geen formulier-ellende.">
+<meta property="og:image" content="https://simonsimpel.nl/og-image.png">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:site_name" content="Simon Simpel">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact — Simon Simpel">
+<meta name="twitter:description" content="Stuur Simon een bericht.">
+<meta name="twitter:image" content="https://simonsimpel.nl/og-image.png">
+
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#1c3a6e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #f4ecd8; --cream-deep: #ebdfc3; --paper: #faf6ec;
+    --tile-blue: #1c3a6e; --tile-blue-dk: #14284e; --tile-blue-lt: #3c64a8;
+    --terracotta: #c8553d; --gold: #b8893a;
+    --ink: #1a1a1a; --muted: #5a5a5a;
+    --line: rgba(28, 58, 110, 0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream); color: var(--ink);
+    line-height: 1.6; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply; opacity: 0.35; z-index: 1;
+  }
+
+  /* NAV */
+  nav.site-nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(244, 236, 216, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1300px; margin: 0 auto;
+    padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 38px; height: 38px;
+    background: var(--tile-blue);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--cream);
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 22px;
+    box-shadow: 0 2px 0 var(--tile-blue-dk);
+  }
+  .brand-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .brand-name em { font-style: italic; color: var(--tile-blue); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink);
+    font-size: 15px; font-weight: 500; position: relative;
+  }
+  .nav-links a:hover { color: var(--tile-blue); }
+  .nav-links a.active { color: var(--tile-blue); font-weight: 600; }
+  .nav-links a.active::after {
+    content: ''; position: absolute; bottom: -6px; left: 0; right: 0;
+    height: 2px; background: var(--terracotta); border-radius: 2px;
+  }
+  .nav-cta {
+    background: var(--tile-blue); color: var(--cream) !important;
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 14px !important;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .nav-cta:hover { background: var(--tile-blue-dk); transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1.5px solid var(--ink);
+    border-radius: 8px;
+    width: 42px; height: 42px;
+    cursor: pointer; padding: 0;
+    position: relative; z-index: 60;
+    transition: background 0.2s;
+  }
+  .menu-toggle:hover { background: rgba(28,58,110,0.06); }
+  .menu-toggle span {
+    position: absolute; left: 10px; right: 10px;
+    height: 2px; background: var(--ink); border-radius: 2px;
+    transition: transform 0.3s, opacity 0.2s, top 0.3s;
+  }
+  .menu-toggle span:nth-child(1) { top: 13px; }
+  .menu-toggle span:nth-child(2) { top: 20px; }
+  .menu-toggle span:nth-child(3) { top: 27px; }
+  .menu-toggle.open span:nth-child(1) { top: 20px; transform: rotate(45deg); }
+  .menu-toggle.open span:nth-child(2) { opacity: 0; }
+  .menu-toggle.open span:nth-child(3) { top: 20px; transform: rotate(-45deg); }
+
+  .mobile-menu {
+    position: fixed; inset: 0;
+    background: var(--cream); z-index: 55;
+    padding: 100px 28px 40px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 32px;
+    opacity: 0; pointer-events: none;
+    transform: translateY(-12px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .mobile-menu a {
+    text-decoration: none; color: var(--ink);
+    font-family: 'Fraunces', serif;
+    font-size: 28px; font-weight: 500; letter-spacing: -0.02em;
+  }
+  .mobile-menu a.active, .mobile-menu a:hover { color: var(--tile-blue); }
+  .mobile-menu .mobile-cta {
+    background: var(--tile-blue); color: var(--cream);
+    padding: 14px 28px; border-radius: 999px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 16px; font-weight: 600; margin-top: 8px;
+  }
+  .mobile-menu .mobile-cta:hover { background: var(--tile-blue-dk); color: var(--cream); }
+  .mobile-menu-socials {
+    display: flex; gap: 14px;
+    margin-top: 40px; padding-top: 32px;
+    border-top: 1px solid var(--line);
+    width: 100%; max-width: 280px; justify-content: center;
+  }
+  .mobile-menu-socials a {
+    width: 44px; height: 44px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink); font-size: 0;
+  }
+  body.menu-open { overflow: hidden; }
+
+  @media (max-width: 720px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    position: relative; z-index: 2;
+    max-width: 800px; margin: 0 auto;
+    padding: 60px 28px 30px;
+    text-align: center;
+  }
+  .page-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--tile-blue); margin-bottom: 20px;
+  }
+  .page-eyebrow::before, .page-eyebrow::after {
+    content: ''; width: 30px; height: 1px; background: var(--tile-blue);
+  }
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.5vw, 60px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  .page-header h1 em { font-style: italic; color: var(--tile-blue); font-weight: 500; }
+  .page-header > p {
+    color: var(--muted);
+    font-size: 18px;
+    max-width: 540px; margin: 0 auto;
+  }
+
+  /* TEGEL QUOTE */
+  .tegel-quote {
+    max-width: 540px; margin: 30px auto 0;
+    padding: 32px 28px;
+    background: linear-gradient(155deg, #fbfaf3 0%, #efe5c8 100%);
+    border-radius: 8px;
+    box-shadow: 0 1px 0 #fff inset, 0 14px 28px -14px rgba(28,58,110,0.3);
+    position: relative;
+  }
+  .tegel-quote::before {
+    content: ''; position: absolute; inset: 12px;
+    border: 1.5px solid var(--tile-blue);
+    border-radius: 4px; pointer-events: none;
+  }
+  .tegel-quote p {
+    font-family: 'Fraunces', serif; font-style: italic;
+    font-size: clamp(17px, 2.2vw, 20px);
+    line-height: 1.35;
+    color: var(--tile-blue-dk);
+    text-align: center;
+    letter-spacing: -0.01em;
+  }
+
+  /* FORM SECTION */
+  main {
+    position: relative; z-index: 2;
+    max-width: 720px; margin: 0 auto;
+    padding: 50px 28px 80px;
+  }
+
+  .form-card {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 40px 44px;
+  }
+  @media (max-width: 600px) {
+    .form-card { padding: 28px 24px; }
+  }
+
+  .field { margin-bottom: 22px; }
+  .field-label {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .field-hint {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+  .field-required {
+    color: var(--terracotta);
+    font-weight: 700;
+    margin-left: 2px;
+  }
+
+  input[type="text"], input[type="email"], textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--tile-blue);
+    box-shadow: 0 0 0 3px rgba(28, 58, 110, 0.12);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 160px;
+    font-family: 'Manrope', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+
+  .submit-row {
+    margin-top: 30px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .submit-fineprint {
+    font-size: 12px;
+    color: var(--muted);
+    flex: 1;
+    min-width: 180px;
+  }
+  .submit-fineprint a {
+    color: var(--tile-blue);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 28px;
+    border: none; border-radius: 999px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--tile-blue); color: var(--cream);
+    box-shadow: 0 4px 0 var(--tile-blue-dk);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--tile-blue-dk); }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--tile-blue-dk); }
+
+  /* WHAT TO EXPECT */
+  .expectations {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 700px) { .expectations { grid-template-columns: 1fr; } }
+  .expect-item {
+    text-align: center;
+    padding: 24px 18px;
+  }
+  .expect-icon {
+    width: 44px; height: 44px;
+    margin: 0 auto 12px;
+    background: var(--cream-deep);
+    border: 1.5px solid var(--tile-blue);
+    border-radius: 999px;
+    display: grid; place-items: center;
+    color: var(--tile-blue);
+  }
+  .expect-item h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .expect-item p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  footer.site-footer {
+    background: var(--cream-deep);
+    border-top: 1px solid var(--line);
+    padding: 60px 28px 30px;
+    position: relative; z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1300px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px; padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; gap: 30px; } }
+  .footer-brand .brand { margin-bottom: 16px; }
+  .footer-brand p { color: var(--muted); font-size: 14px; max-width: 320px; }
+  .social-row { display: flex; gap: 10px; margin-top: 18px; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink); text-decoration: none;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+  }
+  .social-btn:hover {
+    background: var(--tile-blue); color: var(--cream);
+    border-color: var(--tile-blue); transform: translateY(-2px);
+  }
+  .footer-col h4 {
+    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--tile-blue); }
+  .footer-bottom {
+    max-width: 1300px; margin: 0 auto;
+    padding-top: 24px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; color: var(--muted);
+  }
+  .footer-bottom em { color: var(--tile-blue); font-style: italic; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-mark">S</div>
+      <div class="brand-name">Simon <em>Simpel</em></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#tegeltjes">Tegeltjes</a>
+      <a href="index.html#over">Over Simon</a>
+      <a href="index.html#thema">Thema's</a>
+      <a href="tegelmaker.html">Tegelmaker</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="index.html#nieuwsbrief" class="nav-cta">Inschrijven</a>
+    </div>
+    <button class="menu-toggle" aria-label="Menu openen" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="index.html#tegeltjes">Tegeltjes</a>
+  <a href="index.html#over">Over Simon</a>
+  <a href="index.html#thema">Thema's</a>
+  <a href="tegelmaker.html">Tegelmaker</a>
+  <a href="contact.html" class="active">Contact</a>
+  <a href="privacy.html">Privacy</a>
+  <a href="index.html#nieuwsbrief" class="mobile-cta">Inschrijven op de vrijdagmail</a>
+  <div class="mobile-menu-socials">
+    <a href="https://www.linkedin.com/in/simon-simpel" target="_blank" rel="noopener" aria-label="LinkedIn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/profile.php?id=61577144241002" target="_blank" rel="noopener" aria-label="Facebook">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+    </a>
+    <a href="https://www.instagram.com/simonsimpel1" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="contact.html" aria-label="Contact">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+    </a>
+  </div>
+</div>
+
+<header class="page-header">
+  <div class="page-eyebrow">Vragen? Mail Simon gewoon</div>
+  <h1>Stuur een <em>bericht</em>.</h1>
+  <p>Geen ticketsysteem. Geen "uw verzoek wordt verwerkt door ons supportteam". Eén mens, één formulier, antwoord meestal binnen een werkdag.</p>
+</header>
+
+<div class="tegel-quote">
+  <p>&ldquo;Het beste antwoord begint met de juiste vraag.&rdquo;</p>
+</div>
+
+<main>
+  <form class="form-card" action="https://formsubmit.co/simonsimpel2000@gmail.com" method="POST">
+
+    <div class="field">
+      <label class="field-label" for="naam">Hoe mag Simon je noemen?</label>
+      <span class="field-hint">Voornaam is genoeg.</span>
+      <input type="text" id="naam" name="naam" placeholder="Jan" autocomplete="given-name" required>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="email">Waar moet het antwoord heen?<span class="field-required">*</span></label>
+      <span class="field-hint">Je e-mailadres. Wordt alleen gebruikt om te antwoorden.</span>
+      <input type="email" id="email" name="email" placeholder="jan@e-mailadres.nl" autocomplete="email" required>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="bericht">Waarover wil je het hebben?<span class="field-required">*</span></label>
+      <span class="field-hint">Hoe duidelijker je vraag, hoe duidelijker het antwoord.</span>
+      <textarea id="bericht" name="bericht" placeholder="Beste Simon, ..." required></textarea>
+    </div>
+
+    <!-- FormSubmit configuratie -->
+    <input type="hidden" name="_subject" value="🧱 Bericht via SimonSimpel.nl">
+    <input type="hidden" name="_template" value="table">
+    <input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_next" value="https://simonsimpel.nl/bedankt.html?type=contact">
+    <!-- Honeypot anti-spam -->
+    <input type="text" name="_honey" style="position:absolute;left:-9999px;top:-9999px;" tabindex="-1" autocomplete="off">
+
+    <div class="submit-row">
+      <p class="submit-fineprint">
+        Door te versturen ga je akkoord met de manier waarop Simon je bericht behandelt. Lees de <a href="privacy.html">privacyverklaring</a> voor de details.
+      </p>
+      <button type="submit" class="btn btn-primary">
+        Verstuur bericht
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+
+  </form>
+
+  <div class="expectations">
+    <div class="expect-item">
+      <div class="expect-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3>Binnen een werkdag</h3>
+      <p>Meestal sneller. Soms iets later — Simon schrijft ook nog tegeltjes.</p>
+    </div>
+    <div class="expect-item">
+      <div class="expect-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Persoonlijk antwoord</h3>
+      <p>Geen template. Geen "ticket #4291". Gewoon een mail van Simon.</p>
+    </div>
+    <div class="expect-item">
+      <div class="expect-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Geen mailing-lijst</h3>
+      <p>Je adres komt nergens anders in. Niet eens in de vrijdagmail tenzij je je daar ook voor inschrijft.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">S</div>
+        <div class="brand-name">Simon <em>Simpel</em></div>
+      </a>
+      <p>Tegeltjeswijsheid voor leiders, marketeers en teams die liever iets willen dat blijft hangen dan iets dat indrukwekkend lijkt.</p>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/simon-simpel" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61577144241002" target="_blank" rel="noopener" aria-label="Facebook" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/simonsimpel1" target="_blank" rel="noopener" aria-label="Instagram" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="contact.html" aria-label="Contact" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Lezen</h4>
+      <ul>
+        <li><a href="index.html#tegeltjes">Tegeltjes</a></li>
+        <li><a href="index.html#over">Over Simon</a></li>
+        <li><a href="index.html#thema">Thema's</a></li>
+        <li><a href="tegelmaker.html">Tegelmaker</a></li>
+        <li><a href="index.html#nieuwsbrief">Nieuwsbrief</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="contact.html">Contactformulier</a></li>
+        <li><a href="https://www.linkedin.com/in/simon-simpel" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61577144241002" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com/simonsimpel1" target="_blank" rel="noopener">Instagram</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Simon Simpel. <em>Een goed idee past altijd op een tegeltje.</em></div>
+    <div>SimonSimpel.nl ✦ Gemaakt in Nederland</div>
+  </div>
+</footer>
+
+<script>
+const _toggle = document.querySelector('.menu-toggle');
+const _menu = document.querySelector('.mobile-menu');
+function setMenu(open) {
+  _toggle.classList.toggle('open', open);
+  _menu.classList.toggle('open', open);
+  document.body.classList.toggle('menu-open', open);
+  _toggle.setAttribute('aria-expanded', open);
+  _toggle.setAttribute('aria-label', open ? 'Menu sluiten' : 'Menu openen');
+  _menu.setAttribute('aria-hidden', !open);
+}
+_toggle.addEventListener('click', () => setMenu(!_menu.classList.contains('open')));
+_menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && _menu.classList.contains('open')) setMenu(false);
+});
+</script>
+
+</body>
+</html>
