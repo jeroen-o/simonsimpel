@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tegelmaker — Simon Simpel</title>
+<meta name="description" content="Maak in 30 seconden een share-klare tegelafbeelding voor LinkedIn, Facebook of Instagram. Tik je spreuk, kies een formaat, download.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream:        #f4ecd8;
+    --cream-deep:   #ebdfc3;
+    --paper:        #faf6ec;
+    --tile-blue:    #1c3a6e;
+    --tile-blue-dk: #14284e;
+    --tile-blue-lt: #3c64a8;
+    --terracotta:   #c8553d;
+    --gold:         #b8893a;
+    --ink:          #1a1a1a;
+    --muted:        #5a5a5a;
+    --line:         rgba(28, 58, 110, 0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav.site-nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(12px);
+    background: rgba(244, 236, 216, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1300px; margin: 0 auto;
+    padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--ink); }
+  .brand-mark {
+    width: 38px; height: 38px;
+    background: var(--tile-blue);
+    border-radius: 6px;
+    display: grid; place-items: center;
+    color: var(--cream);
+    font-family: 'Fraunces', serif; font-weight: 700; font-size: 22px;
+    box-shadow: 0 2px 0 var(--tile-blue-dk);
+  }
+  .brand-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+  .brand-name em { font-style: italic; color: var(--tile-blue); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a {
+    text-decoration: none; color: var(--ink);
+    font-size: 15px; font-weight: 500;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--tile-blue); }
+  .nav-links a.active { color: var(--tile-blue); font-weight: 600; }
+  .nav-links a.active::after {
+    content: ''; position: absolute;
+    bottom: -6px; left: 0; right: 0;
+    height: 2px; background: var(--terracotta);
+    border-radius: 2px;
+  }
+  .nav-cta {
+    background: var(--tile-blue); color: var(--cream) !important;
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 14px !important;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .nav-cta:hover { background: var(--tile-blue-dk); transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+  @media (max-width: 720px) {
+    .nav-links a:not(.nav-cta):not(.brand) { display: none; }
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    position: relative; z-index: 2;
+    max-width: 1300px; margin: 0 auto;
+    padding: 60px 28px 30px;
+    text-align: center;
+  }
+  .page-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--tile-blue); margin-bottom: 20px;
+  }
+  .page-eyebrow::before, .page-eyebrow::after {
+    content: ''; width: 30px; height: 1px; background: var(--tile-blue);
+  }
+  .page-header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 18px;
+  }
+  .page-header h1 em { font-style: italic; color: var(--tile-blue); font-weight: 500; }
+  .page-header p { color: var(--muted); font-size: 18px; max-width: 580px; margin: 0 auto; }
+
+  /* TOOL */
+  .tool-wrap {
+    position: relative; z-index: 2;
+    max-width: 1300px; margin: 0 auto 40px;
+    padding: 0 28px;
+  }
+  .tool-shell {
+    background: var(--paper);
+    border: 1.5px solid var(--line);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px -25px rgba(28, 58, 110, 0.25);
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    min-height: 640px;
+  }
+  @media (max-width: 900px) { .tool-shell { grid-template-columns: 1fr; } }
+
+  aside.tool-controls {
+    padding: 30px;
+    border-right: 1px solid var(--line);
+    overflow-y: auto;
+  }
+  @media (max-width: 900px) {
+    aside.tool-controls { border-right: none; border-bottom: 1px solid var(--line); }
+  }
+
+  .field { margin-bottom: 24px; }
+  .field-label {
+    display: block;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--tile-blue);
+    margin-bottom: 10px;
+  }
+  .field-hint {
+    font-size: 12px; color: var(--muted);
+    margin-top: 6px; font-style: italic;
+  }
+
+  textarea, input[type="text"], select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 15px;
+    color: var(--ink);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea:focus, input[type="text"]:focus, select:focus {
+    outline: none;
+    border-color: var(--tile-blue);
+    box-shadow: 0 0 0 3px rgba(28, 58, 110, 0.12);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 96px;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .radio-option { position: relative; cursor: pointer; }
+  .radio-option input { position: absolute; opacity: 0; pointer-events: none; }
+  .radio-option .label {
+    display: block;
+    padding: 11px 12px;
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+    text-align: center;
+    transition: all 0.15s;
+  }
+  .radio-option .label-title { display: block; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .radio-option .label-dim { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .radio-option input:checked + .label { border-color: var(--tile-blue); background: var(--tile-blue); }
+  .radio-option input:checked + .label .label-title { color: var(--paper); }
+  .radio-option input:checked + .label .label-dim { color: rgba(244, 246, 236, 0.75); }
+
+  .checkbox-row {
+    display: flex; gap: 10px; align-items: center;
+    padding: 8px 0; cursor: pointer;
+  }
+  .checkbox-row input { width: 18px; height: 18px; cursor: pointer; accent-color: var(--tile-blue); }
+  .checkbox-row span { font-size: 14px; }
+
+  .actions {
+    display: grid; gap: 10px;
+    margin-top: 12px; padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 14px 18px;
+    border: none; border-radius: 999px;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--tile-blue); color: var(--paper);
+    box-shadow: 0 4px 0 var(--tile-blue-dk);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 5px 0 var(--tile-blue-dk); }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--tile-blue-dk); }
+  .btn-secondary {
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--ink);
+  }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+
+  section.tool-preview {
+    padding: 30px;
+    display: flex; align-items: center; justify-content: center;
+    background:
+      linear-gradient(45deg, rgba(28,58,110,0.04) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(28,58,110,0.04) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(28,58,110,0.04) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(28,58,110,0.04) 75%);
+    background-size: 24px 24px;
+    background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+    overflow: auto;
+  }
+  .preview-shell {
+    width: 100%; max-width: 560px;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 14px;
+  }
+  .preview-meta { font-size: 13px; color: var(--muted); text-align: center; }
+  .preview-meta strong { color: var(--tile-blue); }
+  .preview-frame {
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 20px 50px -20px rgba(28,58,110,0.4);
+    overflow: hidden; line-height: 0;
+  }
+  .preview-frame svg { width: 100%; height: auto; display: block; }
+
+  /* HOW TO */
+  .howto {
+    position: relative; z-index: 2;
+    max-width: 1100px; margin: 0 auto;
+    padding: 60px 28px 80px;
+  }
+  .howto h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 3.5vw, 38px);
+    text-align: center;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .howto h2 em { font-style: italic; color: var(--tile-blue); }
+  .howto-intro { text-align: center; color: var(--muted); margin-bottom: 50px; font-size: 17px; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+  .step {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .step:hover { transform: translate(-1px, -1px); box-shadow: 6px 6px 0 var(--ink); }
+  .step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 28px; font-weight: 600;
+    color: var(--tile-blue);
+    line-height: 1; margin-bottom: 12px;
+  }
+  .step h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 18px; font-weight: 600;
+    margin-bottom: 8px; letter-spacing: -0.01em;
+  }
+  .step p { color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+  /* FOOTER */
+  footer.site-footer {
+    background: var(--cream-deep);
+    border-top: 1px solid var(--line);
+    padding: 60px 28px 30px;
+    position: relative; z-index: 2;
+  }
+  .footer-inner {
+    max-width: 1300px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px; padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 700px) { .footer-inner { grid-template-columns: 1fr; gap: 30px; } }
+  .footer-brand .brand { margin-bottom: 16px; }
+  .footer-brand p { color: var(--muted); font-size: 14px; max-width: 320px; }
+  .social-row { display: flex; gap: 10px; margin-top: 18px; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border-radius: 999px;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    display: grid; place-items: center;
+    color: var(--ink); text-decoration: none;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+  }
+  .social-btn:hover {
+    background: var(--tile-blue); color: var(--cream);
+    border-color: var(--tile-blue); transform: translateY(-2px);
+  }
+  .footer-col h4 {
+    font-family: 'Fraunces', serif; font-size: 16px; font-weight: 600;
+    margin-bottom: 16px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: var(--muted); text-decoration: none; font-size: 14px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--tile-blue); }
+  .footer-bottom {
+    max-width: 1300px; margin: 0 auto;
+    padding-top: 24px;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 13px; color: var(--muted);
+  }
+  .footer-bottom em { color: var(--tile-blue); font-style: italic; }
+
+  #status {
+    position: fixed; bottom: 24px; right: 24px;
+    padding: 14px 20px;
+    background: var(--tile-blue); color: var(--paper);
+    border-radius: 999px;
+    box-shadow: 0 8px 24px -8px rgba(28,58,110,0.5);
+    font-size: 14px; font-weight: 500;
+    transform: translateY(80px); opacity: 0;
+    transition: all 0.3s; z-index: 100;
+  }
+  #status.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-mark">S</div>
+      <div class="brand-name">Simon <em>Simpel</em></div>
+    </a>
+    <div class="nav-links">
+      <a href="index.html#tegeltjes">Tegeltjes</a>
+      <a href="index.html#over">Over Simon</a>
+      <a href="index.html#thema">Thema's</a>
+      <a href="tegelmaker.html" class="active">Tegelmaker</a>
+      <a href="index.html#nieuwsbrief" class="nav-cta">Inschrijven</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-header">
+  <div class="page-eyebrow">Gratis tool</div>
+  <h1>Maak je eigen <em>tegeltje</em>.</h1>
+  <p>Tik je spreuk, kies een formaat, klik op download. Klaar voor LinkedIn, Facebook of Instagram. Geen account, geen watermerk, geen poespas.</p>
+</header>
+
+<div class="tool-wrap">
+  <div class="tool-shell">
+
+    <aside class="tool-controls">
+
+      <div class="field">
+        <label class="field-label" for="quote">De spreuk</label>
+        <textarea id="quote" placeholder="Een team zonder doel is een vergadering met koffie." oninput="render()">Een team zonder doel is een vergadering met koffie.</textarea>
+        <div class="field-hint">De aanhalingstekens worden automatisch toegevoegd.</div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="number">Tegelnummer</label>
+        <input type="text" id="number" value="142" placeholder="bijv. 142" oninput="render()">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="theme">Thema</label>
+        <select id="theme" onchange="render()">
+          <option value="LEIDERSCHAP">Leiderschap</option>
+          <option value="MARKETING">Marketing</option>
+          <option value="TEAMBUILDING" selected>Teambuilding</option>
+          <option value="">— geen thema —</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Formaat</label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="format" value="square" checked onchange="render()">
+            <span class="label">
+              <span class="label-title">Vierkant</span>
+              <span class="label-dim">1080 × 1080</span>
+            </span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="format" value="story" onchange="render()">
+            <span class="label">
+              <span class="label-title">Story</span>
+              <span class="label-dim">1080 × 1920</span>
+            </span>
+          </label>
+          <label class="radio-option" style="grid-column: span 2;">
+            <input type="radio" name="format" value="landscape" onchange="render()">
+            <span class="label">
+              <span class="label-title">Liggend</span>
+              <span class="label-dim">1200 × 630 · LinkedIn/FB link preview</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Opties</label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="showBrand" checked onchange="render()">
+          <span>Toon SimonSimpel.nl op tegel</span>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" id="showAvatar" onchange="render()">
+          <span>Toon mini-avatar</span>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="downloadPNG()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PNG
+        </button>
+        <button class="btn btn-secondary" onclick="downloadSVG()">Download SVG (vector)</button>
+      </div>
+
+    </aside>
+
+    <section class="tool-preview">
+      <div class="preview-shell">
+        <div class="preview-meta" id="meta">Vierkant · <strong>1080 × 1080 px</strong></div>
+        <div class="preview-frame" id="preview"></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<section class="howto">
+  <h2>Van tekst naar <em>tegeltje</em> in vier stappen.</h2>
+  <p class="howto-intro">Geen Photoshop. Geen tutorials. Geen huilbuien om transparante achtergronden.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Tik je spreuk</h3>
+      <p>Schrijf hem zo dat hij past op een tegeltje. Korter is altijd beter.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Kies een formaat</h3>
+      <p>Vierkant voor de feed. Story voor Instagram Stories. Liggend voor link previews.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Download</h3>
+      <p>PNG voor uploaden. Of SVG als je later nog wilt schalen of aanpassen.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Plaats overal</h3>
+      <p>LinkedIn, Facebook, Instagram, je nieuwsbrief, een PowerPoint — overal waar het hoort.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="brand">
+        <div class="brand-mark">S</div>
+        <div class="brand-name">Simon <em>Simpel</em></div>
+      </a>
+      <p>Tegeltjeswijsheid voor leiders, marketeers en teams die liever iets willen dat blijft hangen dan iets dat indrukwekkend lijkt.</p>
+      <div class="social-row">
+        <a href="https://www.linkedin.com/in/simon-simpel" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.3 6.5a1.78 1.78 0 0 1-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61577144241002" target="_blank" rel="noopener" aria-label="Facebook" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/simonsimpel1" target="_blank" rel="noopener" aria-label="Instagram" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="mailto:simonsimpel2000@gmail.com" aria-label="E-mail" class="social-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Lezen</h4>
+      <ul>
+        <li><a href="index.html#tegeltjes">Tegeltjes</a></li>
+        <li><a href="index.html#over">Over Simon</a></li>
+        <li><a href="index.html#thema">Thema's</a></li>
+        <li><a href="tegelmaker.html">Tegelmaker</a></li>
+        <li><a href="index.html#nieuwsbrief">Nieuwsbrief</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Volgen</h4>
+      <ul>
+        <li><a href="https://www.linkedin.com/in/simon-simpel" target="_blank" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61577144241002" target="_blank" rel="noopener">Facebook</a></li>
+        <li><a href="https://www.instagram.com/simonsimpel1" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="mailto:simonsimpel2000@gmail.com">simonsimpel2000@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Simon Simpel. <em>Een goed idee past altijd op een tegeltje.</em></div>
+    <div>SimonSimpel.nl ✦ Gemaakt in Nederland</div>
+  </div>
+</footer>
+
+<div id="status"></div>
+
+<script>
+const FORMATS = {
+  square:    { w: 1080, h: 1080, label: 'Vierkant' },
+  story:     { w: 1080, h: 1920, label: 'Story' },
+  landscape: { w: 1200, h: 630,  label: 'Liggend' },
+};
+
+function wrapText(text, maxCharsPerLine) {
+  const paragraphs = text.split(/\n+/);
+  const lines = [];
+  for (const para of paragraphs) {
+    const words = para.trim().split(/\s+/);
+    let current = '';
+    for (const word of words) {
+      const tentative = current ? current + ' ' + word : word;
+      if (tentative.length > maxCharsPerLine && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = tentative;
+      }
+    }
+    if (current) lines.push(current);
+  }
+  return lines;
+}
+
+function fitFont(lines, baseFont) {
+  const total = lines.join(' ').length;
+  if (lines.length <= 2 && total <= 35) return baseFont;
+  if (lines.length <= 3 && total <= 70) return Math.round(baseFont * 0.86);
+  if (lines.length <= 4 && total <= 110) return Math.round(baseFont * 0.74);
+  if (lines.length <= 5)                 return Math.round(baseFont * 0.64);
+  return Math.round(baseFont * 0.55);
+}
+
+function avatarSVG(scale, x, y) {
+  return `
+  <g transform="translate(${x}, ${y}) scale(${scale})">
+    <ellipse cx="60" cy="115" rx="42" ry="6" fill="#1c3a6e" opacity="0.12"/>
+    <path d="M 22 120 L 26 90 Q 30 78 42 75 L 60 72 L 78 75 Q 90 78 94 90 L 98 120 Z" fill="#1c3a6e"/>
+    <path d="M 42 75 L 60 72 L 60 102 L 51 92 Z" fill="#14284e"/>
+    <path d="M 78 75 L 60 72 L 60 102 L 69 92 Z" fill="#14284e"/>
+    <path d="M 53 73 L 60 72 L 67 73 L 67 90 L 60 94 L 53 90 Z" fill="#faf6ec"/>
+    <g transform="translate(60, 81)">
+      <path d="M -7 -3 L -7 3 L -3 1.5 L 0 0 L -3 -1.5 Z" fill="#c8553d"/>
+      <path d="M 7 -3 L 7 3 L 3 1.5 L 0 0 L 3 -1.5 Z" fill="#c8553d"/>
+      <rect x="-2" y="-2" width="4" height="4" rx="1" fill="#a8442d"/>
+    </g>
+    <path d="M 55 65 L 65 65 L 64 73 L 56 73 Z" fill="#e8b894"/>
+    <ellipse cx="40" cy="50" rx="4" ry="6" fill="#f0c5a0"/>
+    <ellipse cx="80" cy="50" rx="4" ry="6" fill="#f0c5a0"/>
+    <ellipse cx="60" cy="50" rx="22" ry="25" fill="#f0c5a0"/>
+    <path d="M 38 45 Q 39 28 60 27 Q 81 28 82 45 Q 82 38 76 33 Q 70 30 65 31 Q 60 29 60 30 Q 60 29 55 31 Q 50 30 44 33 Q 38 38 38 45 Z" fill="#f0c5a0"/>
+    <path d="M 38 50 Q 36 60 38 70 Q 42 67 43 60 Q 42 54 39 50 Z" fill="#e8e3da"/>
+    <path d="M 82 50 Q 84 60 82 70 Q 78 67 77 60 Q 78 54 81 50 Z" fill="#e8e3da"/>
+    <path d="M 46 45 Q 50 42 55 44" stroke="#7a6d5a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <path d="M 65 44 Q 70 42 74 45" stroke="#7a6d5a" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <g stroke="#1a1a1a" stroke-width="1" fill="none">
+      <circle cx="51" cy="52" r="6.5"/>
+      <circle cx="69" cy="52" r="6.5"/>
+      <line x1="57.5" y1="52" x2="62.5" y2="52"/>
+    </g>
+    <circle cx="51" cy="52.5" r="1.3" fill="#1a1a1a"/>
+    <circle cx="69" cy="52.5" r="1.3" fill="#1a1a1a"/>
+    <path d="M 60 56 Q 58 64 60 67" stroke="#c89070" stroke-width="0.7" fill="none" stroke-linecap="round"/>
+    <path d="M 53 72 Q 60 77 67 72" stroke="#1a1a1a" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <path d="M 55 69 Q 60 67 65 69 Q 62 71 60 70 Q 58 71 55 69 Z" fill="#9e8c70"/>
+  </g>`;
+}
+
+function corners(cx1, cy1, cx2, cy2, sz) {
+  return `
+  <g fill="#1c3a6e">
+    <g transform="translate(${cx1}, ${cy1})">
+      <path d="M0 0 L${sz} 0 Q${sz/2} 0 ${sz/2} ${sz/2} Q${sz/2} ${sz} 0 ${sz} Z" opacity="0.85"/>
+      <circle cx="${sz/4.5}" cy="${sz/4.5}" r="${sz/9}"/>
+    </g>
+    <g transform="translate(${cx2}, ${cy1}) scale(-1, 1)">
+      <path d="M0 0 L${sz} 0 Q${sz/2} 0 ${sz/2} ${sz/2} Q${sz/2} ${sz} 0 ${sz} Z" opacity="0.85"/>
+      <circle cx="${sz/4.5}" cy="${sz/4.5}" r="${sz/9}"/>
+    </g>
+    <g transform="translate(${cx1}, ${cy2}) scale(1, -1)">
+      <path d="M0 0 L${sz} 0 Q${sz/2} 0 ${sz/2} ${sz/2} Q${sz/2} ${sz} 0 ${sz} Z" opacity="0.85"/>
+      <circle cx="${sz/4.5}" cy="${sz/4.5}" r="${sz/9}"/>
+    </g>
+    <g transform="translate(${cx2}, ${cy2}) scale(-1, -1)">
+      <path d="M0 0 L${sz} 0 Q${sz/2} 0 ${sz/2} ${sz/2} Q${sz/2} ${sz} 0 ${sz} Z" opacity="0.85"/>
+      <circle cx="${sz/4.5}" cy="${sz/4.5}" r="${sz/9}"/>
+    </g>
+  </g>`;
+}
+
+function tileComponent(tx, ty, size, opts) {
+  const { quote, theme, number, showBrand, showAvatar } = opts;
+  const padding = size * 0.055;
+  const lines = wrapText(quote, 18);
+  const fontSize = fitFont(lines, size * 0.085);
+  const lineHeight = fontSize * 1.22;
+  const totalH = lines.length * lineHeight;
+  const avatarOffset = showAvatar ? size * 0.10 : 0;
+  const startY = (size - totalH) / 2 + fontSize * 0.85 - avatarOffset / 2;
+  const cornerSize = size * 0.04;
+  const innerPad = size * 0.04;
+
+  const themeBlock = (theme || number) ? `
+    <text x="${size/2}" y="${size - padding - 4}"
+          font-family="Helvetica, Arial, sans-serif"
+          font-size="${size * 0.018}"
+          font-weight="700"
+          letter-spacing="${size * 0.0035}"
+          fill="#1c3a6e"
+          text-anchor="middle"
+          opacity="0.7">${number ? '\u2116 ' + number : ''}${number && theme ? '  \u2726  ' : ''}${theme}</text>
+  ` : '';
+
+  const brandBlock = showBrand ? `
+    <text x="${size/2}" y="${padding + size * 0.045}"
+          font-family="Georgia, serif"
+          font-style="italic"
+          font-weight="600"
+          font-size="${size * 0.026}"
+          fill="#1c3a6e"
+          text-anchor="middle"
+          opacity="0.55">SimonSimpel.nl</text>
+  ` : '';
+
+  const avatarBlock = showAvatar
+    ? avatarSVG(size * 0.0035, size/2 - (60 * size * 0.0035), size - padding - (130 * size * 0.0035))
+    : '';
+
+  const escape = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  const lineSpans = lines.map((line, i) => {
+    let t = escape(line);
+    if (i === 0) t = '\u201C' + t;
+    if (i === lines.length - 1) t = t + '\u201D';
+    return `<tspan x="${size/2}" dy="${i === 0 ? 0 : lineHeight}">${t}</tspan>`;
+  }).join('');
+
+  return `
+  <g transform="translate(${tx}, ${ty})">
+    <rect x="0" y="0" width="${size}" height="${size}" fill="url(#tileBg)"/>
+    <rect x="${innerPad}" y="${innerPad}" width="${size - 2*innerPad}" height="${size - 2*innerPad}"
+          rx="${size*0.012}" fill="none" stroke="#1c3a6e" stroke-width="${size*0.003}"/>
+    <rect x="${innerPad + size*0.014}" y="${innerPad + size*0.014}"
+          width="${size - 2*(innerPad + size*0.014)}" height="${size - 2*(innerPad + size*0.014)}"
+          rx="${size*0.006}" fill="none" stroke="#3c64a8" stroke-width="${size*0.0014}" opacity="0.4"/>
+    ${corners(innerPad + size*0.022, innerPad + size*0.022,
+              size - innerPad - size*0.022 - cornerSize, size - innerPad - size*0.022 - cornerSize,
+              cornerSize)}
+    ${brandBlock}
+    <text x="${size/2}" y="${startY}" font-family="Georgia, serif" font-style="italic" font-weight="500"
+          font-size="${fontSize}" fill="#14284e" text-anchor="middle" letter-spacing="-1">
+      ${lineSpans}
+    </text>
+    ${avatarBlock}
+    ${themeBlock}
+  </g>`;
+}
+
+function buildSVG(opts) {
+  const { format } = opts;
+  const fmt = FORMATS[format];
+  const W = fmt.w;
+  const H = fmt.h;
+
+  const defs = `
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4ecd8"/>
+      <stop offset="100%" stop-color="#ebdfc3"/>
+    </linearGradient>
+    <linearGradient id="tileBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbfaf3"/>
+      <stop offset="100%" stop-color="#efe5c8"/>
+    </linearGradient>
+    <filter id="tileShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="${W*0.012}"/>
+      <feOffset dx="0" dy="${W*0.005}" result="off"/>
+      <feFlood flood-color="#1c3a6e" flood-opacity="0.32"/>
+      <feComposite in2="off" operator="in"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>`;
+
+  let content = '';
+
+  if (format === 'square') {
+    content = tileComponent(0, 0, W, opts);
+  }
+  else if (format === 'story') {
+    const tileSize = W * 0.92;
+    const tx = (W - tileSize) / 2;
+    const ty = (H - tileSize) / 2;
+    content = `
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>
+    <g transform="translate(${W/2}, ${ty * 0.55})">
+      <text font-family="Georgia, serif" font-style="italic" font-weight="600" font-size="56" fill="#14284e" text-anchor="middle">Simon<tspan fill="#c8553d">Simpel</tspan></text>
+      <text y="44" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3" fill="#1c3a6e" text-anchor="middle" opacity="0.75">TEGELTJESWIJSHEID</text>
+    </g>
+    <g filter="url(#tileShadow)">
+      ${tileComponent(tx, ty, tileSize, { ...opts, showBrand: false })}
+    </g>
+    <text x="${W/2}" y="${H - ty * 0.4}" font-family="Helvetica, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="2" fill="#1c3a6e" text-anchor="middle">SIMONSIMPEL.NL</text>`;
+  }
+  else if (format === 'landscape') {
+    const tileSize = H * 0.86;
+    const tileX = W - tileSize - (H - tileSize) / 2;
+    const tileY = (H - tileSize) / 2;
+    content = `
+    <rect width="${W}" height="${H}" fill="url(#bg)"/>
+    ${corners(28, 28, W-50, H-50, 22)}
+    <rect x="22" y="22" width="${W-44}" height="${H-44}" rx="8" fill="none" stroke="#1c3a6e" stroke-width="1.8" opacity="0.45"/>
+    <g transform="translate(70, ${H/2 - 80})">
+      <g transform="translate(0, -10)">
+        <line x1="0" y1="0" x2="36" y2="0" stroke="#1c3a6e" stroke-width="1.8"/>
+        <text x="48" y="5" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="700" fill="#1c3a6e" letter-spacing="3">TEGELTJESWIJSHEID SINDS 2017</text>
+      </g>
+      <text y="60" font-family="Georgia, serif" font-weight="700" font-size="62" fill="#1a1a1a" letter-spacing="-2">Simon<tspan font-style="italic" fill="#c8553d">Simpel.nl</tspan></text>
+      <text y="105" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#1c3a6e">Een goed idee past altijd op een tegeltje.</text>
+      ${opts.theme ? `<g transform="translate(0, 135)">
+        <rect x="0" y="0" width="${opts.theme.length*8 + 30}" height="30" rx="15" fill="none" stroke="#1c3a6e" stroke-width="1.5"/>
+        <text x="${(opts.theme.length*8 + 30)/2}" y="20" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="1.5" fill="#1c3a6e" text-anchor="middle">${opts.theme}</text>
+      </g>` : ''}
+    </g>
+    <g filter="url(#tileShadow)" transform="rotate(-3 ${tileX + tileSize/2} ${tileY + tileSize/2})">
+      ${tileComponent(tileX, tileY, tileSize, { ...opts, showBrand: false })}
+    </g>`;
+  }
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}">
+${defs}
+${content}
+</svg>`;
+}
+
+function readInputs() {
+  const quote = document.getElementById('quote').value.trim() || 'Een spreuk hoort op een tegeltje.';
+  const number = document.getElementById('number').value.trim();
+  const theme = document.getElementById('theme').value;
+  const format = document.querySelector('input[name="format"]:checked').value;
+  const showBrand = document.getElementById('showBrand').checked;
+  const showAvatar = document.getElementById('showAvatar').checked;
+  return { quote, number, theme, format, showBrand, showAvatar };
+}
+
+function render() {
+  const opts = readInputs();
+  const fmt = FORMATS[opts.format];
+  const svg = buildSVG(opts);
+  document.getElementById('preview').innerHTML = svg;
+  document.getElementById('meta').innerHTML = `${fmt.label} · <strong>${fmt.w} × ${fmt.h} px</strong>`;
+  const shell = document.querySelector('.preview-shell');
+  if (opts.format === 'story') shell.style.maxWidth = '380px';
+  else if (opts.format === 'landscape') shell.style.maxWidth = '700px';
+  else shell.style.maxWidth = '560px';
+}
+
+function showStatus(msg) {
+  const el = document.getElementById('status');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+function makeFilename(ext) {
+  const opts = readInputs();
+  const fmt = FORMATS[opts.format];
+  const num = opts.number ? `nr${opts.number}-` : '';
+  return `simonsimpel-${num}${opts.format}-${fmt.w}x${fmt.h}.${ext}`;
+}
+
+function downloadSVG() {
+  const opts = readInputs();
+  const svg = buildSVG(opts);
+  const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = makeFilename('svg'); a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showStatus('SVG gedownload');
+}
+
+function downloadPNG() {
+  const opts = readInputs();
+  const fmt = FORMATS[opts.format];
+  const svg = buildSVG(opts);
+  const svgEncoded = encodeURIComponent(svg).replace(/'/g, '%27').replace(/"/g, '%22');
+  const dataURL = 'data:image/svg+xml;charset=utf-8,' + svgEncoded;
+  const img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = fmt.w; canvas.height = fmt.h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, fmt.w, fmt.h);
+    canvas.toBlob((blob) => {
+      if (!blob) { showStatus('Download mislukt — probeer SVG'); return; }
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = makeFilename('png'); a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      showStatus(`PNG gedownload (${fmt.w}\u00D7${fmt.h})`);
+    }, 'image/png');
+  };
+  img.onerror = () => { showStatus('Download mislukt — probeer SVG'); };
+  img.src = dataURL;
+}
+
+render();
+</script>
+</body>
+</html>
